@@ -25,8 +25,8 @@ const Home = () => {
     <div className="home">
       {/* <BlogList blogs={blogs.filter((blog) => blog.author === "john")} title="John's blogs"/> */}
       <BlogList blogs={blogs} title="New Blogs" handleDelete={handleDelete}/>
-      <button onClick={() => setName('john')}>Change name</button>
-      <p>{ name }</p>
+      {/* <button onClick={() => setName('john')}>Change name</button>
+      <p>{ name }</p> */}
     </div>
   );
 }
