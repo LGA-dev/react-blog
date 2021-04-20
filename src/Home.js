@@ -1,36 +1,10 @@
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 import BlogList from './BlogList';
+import useFetch from './useFetch';
 
 const Home = () => {
-  const [blogs, setBlogs] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  // Can't use async/await inside useEffect [ useEffect(async () => { ]
-  useEffect(() => {
-    fetch('http://localhost:8000/blogs')
-      // Return a promise
-      .then(response => {
-        // Response object
-        // console.log(response)
-        if(!response.ok) {
-          throw Error('could not fetch the data for that resource :(')
-        }
-        // Returning this will make this return another promise, which will be used in the .then below
-        return response.json()
-      })
-      .then(data => {
-        // console.log(data);
-        setBlogs(data);
-        setIsLoading(false);
-        setError(null);
-      })
-      .catch(err => {
-        // console.log(err.message);
-        setIsLoading(false);
-        setError(err.message);
-      })
-  }, []);
+  // data: blogs ("Grab the data, but call it blogs in this context")
+  const { data: blogs, isLoading, error } = useFetch('http://localhost:8000/blogs')
 
   return (
     <div className="home">
@@ -43,9 +17,9 @@ const Home = () => {
       2. fetch the blogs and set them
       3. blogs = true
       4. render the component */}
-      {error && <div>{ error }</div>}
-      {isLoading && <div>Loading...</div>}
-      {blogs && <BlogList blogs={blogs} title="New Blogs" />}
+      { error && <div>{ error }</div> }
+      { isLoading && <div>Loading...</div> }
+      { blogs && <BlogList blogs={blogs} title="New Blogs" /> }
     </div>
   );
 }
